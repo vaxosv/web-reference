@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# Prompts the user for a directory name and then creates it  with mkdir.
+
+echo "Give a directory name to create:" 
+read NEW_DIR
+
+# Save original directory so we can return to it (could also just use pushd, popd)
+
+ORIG_DIR=$(pwd)
+
+# check to make sure it doesn't already exist!
+
+[[ -d $NEW_DIR ]] && echo $NEW_DIR already exists, aborting && exit 
+mkdir $NEW_DIR
+mkdir $NEW_DIR/css
+mkdir $NEW_DIR/js
+mkdir $NEW_DIR/images
+
+# Using touch, creates several empty files and runs ls on them to verify they are empty.
+
+cat $NEW_DIR/main.html >> <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="./css/main.css">
+    <title>Document</title>
+</head>
+<body>
+    
+    <script src="./js/js.js"></script>
+    <script src="./js/jquery-3.3.1.min.js"></script>
+</body>
+</html>
+touch $NEW_DIR/css/main.css
+touch $NEW_DIR/js/js.js
+wget -P $ORIG_DIR/$NEW_DIR/js/ https://code.jquery.com/jquery-3.3.1.min.js
+
+# Says goodbye to the user and cleans up after itself 
+echo done
